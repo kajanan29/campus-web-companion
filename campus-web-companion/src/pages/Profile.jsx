@@ -76,7 +76,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] overflow-auto bg-slate-50 p-4 md:p-10" style={{ scrollbarWidth: 'none' }}>
+    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] overflow-auto bg-slate-50 p-4 md:p-10" style={{ scrollbarWidth: 'none' }}>
       <div className="max-w-5xl mx-auto space-y-8 fade-up">
 
         {/* Page Header */}
@@ -106,7 +106,7 @@ export default function Profile() {
 
           <div className="px-6 md:px-10 pb-10">
             {/* Avatar & Action */}
-            <div className="flex justify-between items-end -mt-16 mb-8 relative z-10">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 -mt-16 mb-8 relative z-10">
               <div className="relative group">
                 <img
                   className={`w-32 h-32 rounded-2xl object-cover border-4 border-white shadow-lg bg-white transition-all ${isEditing ? 'opacity-80' : ''}`}
@@ -117,7 +117,7 @@ export default function Profile() {
                 {/* Always show camera button to easily upload, but make it more prominent in edit mode */}
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute -bottom-3 -right-3 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors border-2 border-white"
+                  className="absolute -bottom-3 -right-3 w-11 h-11 md:w-10 md:h-10 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors border-2 border-white"
                   title="Update Photo"
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>photo_camera</span>
