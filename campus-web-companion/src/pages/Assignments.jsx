@@ -394,7 +394,7 @@ export default function Assignments() {
   });
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col bg-slate-50">
+    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] flex flex-col bg-slate-50">
       
       {/* Modals */}
       <AssignmentDetailModal 
@@ -457,19 +457,21 @@ export default function Assignments() {
             </div>
             
             <div className="w-full sm:w-auto relative group">
-              <div className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
-                <span className="material-symbols-outlined text-gray-400" style={{ fontSize: '20px' }}>filter_list</span>
-                <select 
-                  value={activeFilter} 
-                  onChange={(e) => setActiveFilter(e.target.value)}
-                  className="bg-transparent border-none outline-none text-sm font-bold text-gray-700 cursor-pointer appearance-none pr-6"
-                >
-                  <option value="All">All Assignments</option>
-                  <option value="Urgent">Urgent</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                </select>
-                <span className="material-symbols-outlined absolute right-4 text-gray-400 pointer-events-none" style={{ fontSize: '20px' }}>expand_more</span>
+              <div className="w-full flex items-center justify-between sm:justify-start gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
+                <div className="flex items-center gap-2 flex-grow">
+                  <span className="material-symbols-outlined text-gray-400" style={{ fontSize: '20px' }}>filter_list</span>
+                  <select 
+                    value={activeFilter} 
+                    onChange={(e) => setActiveFilter(e.target.value)}
+                    className="w-full bg-transparent border-none outline-none text-sm font-bold text-gray-700 cursor-pointer appearance-none"
+                  >
+                    <option value="All">All Assignments</option>
+                    <option value="Urgent">Urgent</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+                <span className="material-symbols-outlined text-gray-400 pointer-events-none" style={{ fontSize: '20px' }}>expand_more</span>
               </div>
             </div>
           </div>
