@@ -91,10 +91,10 @@ function EventCard({ ev, onDelete, dateKey }) {
     <div className={`relative p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all bg-white border-l-4 ${style.border} group`}>
       <button 
         onClick={(e) => { e.stopPropagation(); onDelete(dateKey, ev.id); }}
-        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full text-gray-300 hover:text-red-500 hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100"
+        className="absolute top-1 right-1 w-11 h-11 md:w-8 md:h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 z-10"
         title="Delete Event"
       >
-        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>delete</span>
+        <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>delete</span>
       </button>
 
       <div className="flex flex-col gap-2 pr-6">
@@ -283,17 +283,17 @@ export default function Schedule() {
   };
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col bg-slate-50 relative">
+    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] flex flex-col bg-slate-50 relative">
       
       {/* ── Header Toolbar ── */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4 md:px-8 flex items-center justify-between shrink-0 z-20 sticky top-0">
+      <div className="bg-white border-b border-gray-200 px-4 py-4 md:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 z-20 sticky top-0">
         
         <div>
           <h1 className="font-extrabold text-2xl text-gray-900 tracking-tight">Class Schedule</h1>
           <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mt-0.5">{headerTitle}</p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-end w-full sm:w-auto gap-4">
           <div className="relative flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200" ref={dropdownRef}>
             <button onClick={() => setDayOffset(o => o - 1)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white hover:shadow-sm text-gray-600 transition-all" title="Previous Day">
               <span className="material-symbols-outlined">chevron_left</span>
