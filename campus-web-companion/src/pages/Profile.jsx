@@ -185,16 +185,16 @@ export default function Profile() {
 
             {/* Edit Mode Actions (Bottom) */}
             {isEditing && (
-              <div className="mt-10 pt-6 border-t border-outline flex items-center justify-end gap-3">
+              <div className="mt-10 pt-6 border-t border-outline flex flex-col-reverse sm:flex-row justify-end gap-3">
                 <button 
                   onClick={handleCancel} 
-                  className="px-6 py-2.5 bg-surface-low text-on-surface-variant rounded-xl font-bold text-sm hover:bg-surface-med transition-colors"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-surface-low text-on-surface-variant rounded-xl font-bold text-sm hover:bg-surface-med transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleSave} 
-                  className="px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:opacity-90 transition-colors shadow-md flex items-center gap-2"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:opacity-90 transition-colors shadow-md flex items-center justify-center gap-2 whitespace-nowrap"
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>save</span>
                   Save Changes

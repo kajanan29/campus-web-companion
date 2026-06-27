@@ -40,11 +40,11 @@ const generateInitialSchedule = () => {
 
 /* ── UI Helpers ── */
 const TYPE_STYLES = {
-  lecture: { border: 'border-l-blue-500', bg: 'bg-blue-50/50', badge: 'bg-blue-100 text-blue-700' },
-  lab:     { border: 'border-l-purple-500', bg: 'bg-purple-50/50', badge: 'bg-purple-100 text-purple-700' },
-  studio:  { border: 'border-l-pink-500', bg: 'bg-pink-50/50', badge: 'bg-pink-100 text-pink-700' },
-  seminar: { border: 'border-l-amber-500', bg: 'bg-amber-50/50', badge: 'bg-amber-100 text-amber-700' },
-  other:   { border: 'border-l-gray-500', bg: 'bg-gray-50', badge: 'bg-gray-200 text-gray-700' },
+  lecture: { border: 'border-l-blue-500', bg: 'bg-blue-50/50 dark:bg-blue-500/10', badge: 'bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300' },
+  lab:     { border: 'border-l-purple-500', bg: 'bg-purple-50/50 dark:bg-purple-500/10', badge: 'bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300' },
+  studio:  { border: 'border-l-pink-500', bg: 'bg-pink-50/50 dark:bg-pink-500/10', badge: 'bg-pink-100 text-pink-700 dark:bg-pink-500/20 dark:text-pink-300' },
+  seminar: { border: 'border-l-amber-500', bg: 'bg-amber-50/50 dark:bg-amber-500/10', badge: 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300' },
+  other:   { border: 'border-l-gray-500', bg: 'bg-gray-50/80 dark:bg-gray-500/10', badge: 'bg-gray-200 text-gray-700 dark:bg-gray-500/20 dark:text-gray-300' },
 };
 
 /* ── Mini Calendar Helper ── */
@@ -88,28 +88,32 @@ function EventCard({ ev, onDelete, dateKey }) {
   const style = TYPE_STYLES[ev.type] || TYPE_STYLES.other;
   
   return (
-    <div className={`relative p-4 rounded-xl border border-outline shadow-sm hover:shadow-md transition-all bg-surface border-l-4 ${style.border} group`}>
+    <div className={`relative p-3.5 h-[170px] flex flex-col rounded-2xl border border-outline shadow-sm hover:shadow-md transition-all ${style.bg} border-l-4 ${style.border} group`}>
       <button 
         onClick={(e) => { e.stopPropagation(); onDelete(dateKey, ev.id); }}
-        className="absolute top-1 right-1 w-11 h-11 md:w-8 md:h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 z-10"
+        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full text-gray-400 hover:text-red-600 hover:bg-white transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 z-10 shadow-sm md:shadow-none"
         title="Delete Event"
       >
-        <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>delete</span>
+        <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>delete</span>
       </button>
 
-      <div className="flex flex-col gap-2 pr-6">
-        <div className="flex items-center gap-2">
-          <span className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-widest ${style.badge}`}>
+      <div className="flex flex-col h-full">
+        <div className="pr-5 flex-shrink-0">
+          <span className={`w-max px-2 py-0.5 rounded-md text-[9px] font-extrabold uppercase tracking-widest ${style.badge} shadow-sm inline-block mb-2`}>
             {ev.code}
           </span>
-          <span className="text-xs font-bold text-on-surface-variant">{ev.time}</span>
+          <h3 className="font-extrabold text-on-surface text-sm leading-snug line-clamp-2">{ev.title}</h3>
         </div>
         
-        <h3 className="font-extrabold text-on-surface text-sm leading-tight">{ev.title}</h3>
-        
-        <div className="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
-          <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>location_on</span>
-          <span className="truncate">{ev.loc}</span>
+        <div className="flex flex-col gap-1.5 mt-auto pt-2 border-t border-black/5">
+          <div className="flex items-start gap-1.5 text-xs font-bold text-on-surface-variant">
+            <span className="material-symbols-outlined shrink-0" style={{ fontSize: '14px', marginTop: '1px' }}>schedule</span>
+            <span className="leading-tight">{ev.time.replace(' — ', ' - ')}</span>
+          </div>
+          <div className="flex items-start gap-1.5 text-xs font-bold text-on-surface-variant">
+            <span className="material-symbols-outlined shrink-0" style={{ fontSize: '14px', marginTop: '1px' }}>location_on</span>
+            <span className="leading-tight truncate">{ev.loc}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -451,7 +455,8 @@ export default function Schedule() {
                     {/* Day Events Column */}
                     <div className="flex flex-col gap-3 flex-grow rounded-2xl">
                       {events.length === 0 ? (
-                        <div className="h-24 rounded-xl border-2 border-dashed border-outline bg-surface-low/40 flex items-center justify-center">
+                        <div className="flex-grow min-h-[120px] rounded-2xl border-2 border-dashed border-outline bg-surface-low/30 flex flex-col items-center justify-center text-center p-4 transition-all hover:bg-surface-low/50">
+                          <span className="material-symbols-outlined text-text-faint text-3xl mb-1.5">coffee</span>
                           <span className="text-[10px] font-extrabold text-text-faint uppercase tracking-widest">Free Day</span>
                         </div>
                       ) : (
