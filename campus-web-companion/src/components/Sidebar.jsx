@@ -77,9 +77,6 @@ export default function Sidebar({ onClose, mobile }) {
 
       {/* Nav Links */}
       <div className="flex-grow overflow-y-auto py-4 px-3 space-y-1">
-        <p className="text-on-surface-variant px-3 mb-2 font-bold uppercase" style={{ fontSize: '10px', letterSpacing: '0.08em' }}>
-          Navigation
-        </p>
         {NAV_ITEMS.map(({ to, icon, label }) => (
           <NavLink
             key={to}

@@ -141,9 +141,34 @@ export const generateSeedSchedule = () => {
  * It only seeds if the key does not already exist.
  */
 export const seedScheduleIfEmpty = () => {
-  const existing = localStorage.getItem('campuslink-schedule-v3');
-  if (!existing || JSON.parse(existing) === null || Object.keys(JSON.parse(existing)).length === 0) {
-    const seed = generateSeedSchedule();
-    localStorage.setItem('campuslink-schedule-v3', JSON.stringify(seed));
+  const seed = generateSeedSchedule();
+
+  let existing = {};
+  try {
+    const raw = localStorage.getItem('campuslink-schedule-v3');
+    if (raw) existing = JSON.parse(raw) || {};
+  } catch {
+    existing = {};
   }
+
+  // Merge: for each seed date, add only classes not already present
+  // (identified by matching code + time to avoid duplicates)
+  const merged = { ...existing };
+
+  for (const [dateKey, seedClasses] of Object.entries(seed)) {
+    const existingClasses = merged[dateKey] || [];
+    const existingSignatures = new Set(
+      existingClasses.map((c) => `${c.code}|${c.time}`)
+    );
+
+    const newClasses = seedClasses.filter(
+      (c) => !existingSignatures.has(`${c.code}|${c.time}`)
+    );
+
+    if (newClasses.length > 0) {
+      merged[dateKey] = [...existingClasses, ...newClasses];
+    }
+  }
+
+  localStorage.setItem('campuslink-schedule-v3', JSON.stringify(merged));
 };
