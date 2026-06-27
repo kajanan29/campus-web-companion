@@ -219,7 +219,7 @@ export default function Dashboard() {
 
           {/* Weather widget — live data from Open-Meteo */}
           <div
-            className="px-3 py-2 bg-surface-container border border-outline-variant rounded-lg flex items-center gap-2 text-sm"
+            className="px-3 py-2 bg-surface-low border border-outline rounded-lg flex items-center gap-2 text-sm"
             style={{ minHeight: '44px' }}
             title="Live weather data from Open-Meteo API"
           >
@@ -256,9 +256,9 @@ export default function Dashboard() {
         <div className="lg:col-span-8 space-y-6">
 
           {/* Today's Schedule Card */}
-          <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 md:p-6 shadow-sm">
+          <div className="card p-4 md:p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 md:mb-6">
-              <h2 className="font-bold flex items-center gap-2" style={{ fontSize: '18px' }}>
+              <h2 className="font-bold flex items-center gap-2 text-on-surface" style={{ fontSize: '18px' }}>
                 <span className="material-symbols-outlined text-primary">event_upcoming</span>
                 Today's Schedule
               </h2>
@@ -279,11 +279,11 @@ export default function Dashboard() {
                 todayClasses.map((cls, i) => (
                   <div
                     key={i}
-                    className={`p-4 rounded-lg bg-surface-container border-l-4 ${cls.codeBorder || 'border-primary'} hover:-translate-y-1 transition-all cursor-pointer`}
+                    className={`p-4 rounded-lg bg-surface-low border-l-4 ${cls.codeBorder || 'border-primary'} hover:-translate-y-1 transition-all cursor-pointer`}
                     style={{ minHeight: '80px' }}
                   >
                     <p className={`text-xs ${cls.codeColor || 'text-primary'} uppercase font-bold mb-1`}>{cls.time}</p>
-                    <h3 className="font-bold text-sm mb-2">{cls.title || cls.subject}</h3>
+                    <h3 className="font-bold text-sm mb-2 text-on-surface">{cls.title || cls.subject}</h3>
                     <div className="flex items-center gap-1.5 text-on-surface-variant text-xs">
                       <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>{cls.locIcon || 'location_on'}</span>
                       <span>{cls.loc || cls.location}</span>
@@ -295,9 +295,9 @@ export default function Dashboard() {
           </div>
 
           {/* Enrolled Courses Card */}
-          <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 md:p-6 shadow-sm">
+          <div className="card p-4 md:p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 md:mb-6">
-              <h2 className="font-bold flex items-center gap-2" style={{ fontSize: '18px' }}>
+              <h2 className="font-bold flex items-center gap-2 text-on-surface" style={{ fontSize: '18px' }}>
                 <span className="material-symbols-outlined text-primary">school</span>
                 Enrolled Courses
               </h2>
@@ -305,7 +305,7 @@ export default function Dashboard() {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {enrolledCourses.map(course => (
-                <div key={course.id} className="flex items-start gap-4 p-4 rounded-xl border border-outline-variant hover:shadow-md transition-all bg-white">
+                <div key={course.id} className="flex items-start gap-4 p-4 rounded-xl border border-outline hover:shadow-md transition-all bg-surface-low">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${course.color} ${course.textColor}`}>
                     <span className="material-symbols-outlined">{course.icon || 'book'}</span>
                   </div>
@@ -316,8 +316,8 @@ export default function Dashboard() {
                       </span>
                       <span className="text-xs text-on-surface-variant font-bold">{course.credits} Credits</span>
                     </div>
-                    <h3 className="font-bold text-sm text-gray-900 leading-tight mb-1">{course.title}</h3>
-                    <p className="text-xs text-gray-500 font-medium">{course.instructor}</p>
+                    <h3 className="font-bold text-sm text-on-surface leading-tight mb-1">{course.title}</h3>
+                    <p className="text-xs text-on-surface-variant font-medium">{course.instructor}</p>
                   </div>
                 </div>
               ))}
@@ -329,9 +329,9 @@ export default function Dashboard() {
         <div className="lg:col-span-4 space-y-6">
 
           {/* Tasks Widget */}
-          <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 md:p-6 shadow-sm">
+          <div className="card p-4 md:p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4 md:mb-6">
-              <h2 className="font-bold flex items-center gap-2" style={{ fontSize: '18px' }}>
+              <h2 className="font-bold flex items-center gap-2 text-on-surface" style={{ fontSize: '18px' }}>
                 <span className="material-symbols-outlined text-secondary">assignment_turned_in</span>
                 Assignments
               </h2>
@@ -343,7 +343,7 @@ export default function Dashboard() {
                 </div>
               ) : (
                 tasksToShow.map((task, i) => (
-                  <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors" style={{ minHeight: '56px' }}>
+                  <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-low transition-colors border border-outline" style={{ minHeight: '56px' }}>
                     <div className="flex items-center gap-3">
                       <div className={`w-10 h-10 rounded ${task.iconBg} flex items-center justify-center flex-shrink-0`}>
                         <span className={`material-symbols-outlined ${task.iconColor}`} style={{ fontSize: '20px' }}>{task.icon}</span>

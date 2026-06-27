@@ -19,9 +19,6 @@ const NAV_ITEMS = [
 
 export default function Sidebar({ onClose, mobile }) {
   const { dark } = useTheme();
-  const sideBg     = dark ? '#0e1525' : '#ffffff';
-  const borderCol  = dark ? '#1f2d45' : '#c3c6d7';
-  const chipBg     = dark ? '#161e2e' : '#f3f4fb';
   const [profile, setProfile] = useState(() => {
     try {
       const saved = localStorage.getItem('campuslink-profile');
@@ -46,11 +43,11 @@ export default function Sidebar({ onClose, mobile }) {
 
   return (
     <nav
-      className="flex flex-col h-full border-r"
-      style={{ background: sideBg, borderColor: borderCol, width: mobile ? '280px' : '260px' }}
+      className="flex flex-col h-full border-r border-outline bg-sidebar"
+      style={{ width: mobile ? '280px' : '260px' }}
     >
       {/* Brand / Close Row */}
-      <div className="flex items-center justify-between px-5 py-4 flex-shrink-0" style={{ height: '64px', borderBottom: `1px solid ${borderCol}` }}>
+      <div className="flex items-center justify-between px-5 py-4 flex-shrink-0 border-b border-outline" style={{ height: '64px' }}>
         <div className="flex items-center gap-3">
           <div
             className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm"
@@ -72,10 +69,10 @@ export default function Sidebar({ onClose, mobile }) {
         {mobile && (
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-surface-container transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-surface-low transition-colors text-on-surface-variant"
             aria-label="Close menu"
           >
-            <span className="material-symbols-outlined text-on-surface-variant">close</span>
+            <span className="material-symbols-outlined">close</span>
           </button>
         )}
       </div>
@@ -91,8 +88,8 @@ export default function Sidebar({ onClose, mobile }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 rounded-xl font-bold transition-all group ${
                 isActive
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface'
+                  ? 'bg-primary-light text-primary'
+                  : 'text-on-surface-variant hover:bg-surface-low hover:text-on-surface'
               }`
             }
             style={{ minHeight: '48px' }}
@@ -121,11 +118,11 @@ export default function Sidebar({ onClose, mobile }) {
       </div>
 
       {/* Bottom Section */}
-      <div className="py-4 px-3 flex-shrink-0" style={{ borderTop: `1px solid ${borderCol}` }}>
+      <div className="py-4 px-3 flex-shrink-0 border-t border-outline">
         {/* User chip */}
-        <div className="flex items-center gap-3 px-3 py-2 mt-2 rounded-xl" style={{ minHeight: '52px', background: chipBg }}>
+        <div className="flex items-center gap-3 px-3 py-2 mt-2 rounded-xl bg-surface-low" style={{ minHeight: '52px' }}>
           {profile.avatarUrl ? (
-            <img src={profile.avatarUrl} alt="avatar" className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-outline-variant" />
+            <img src={profile.avatarUrl} alt="avatar" className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-outline" />
           ) : (
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0"

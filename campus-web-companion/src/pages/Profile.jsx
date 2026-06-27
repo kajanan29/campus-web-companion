@@ -76,19 +76,19 @@ export default function Profile() {
   };
 
   return (
-    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] overflow-auto bg-slate-50 p-4 md:p-10" style={{ scrollbarWidth: 'none' }}>
+    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] overflow-auto bg-bg p-4 md:p-10" style={{ scrollbarWidth: 'none' }}>
       <div className="max-w-5xl mx-auto space-y-8 fade-up">
 
         {/* Page Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <h1 className="font-extrabold text-gray-900 text-3xl md:text-4xl tracking-tight">Student Profile</h1>
-            <p className="text-sm font-medium text-gray-500 mt-1">Manage your academic and personal details.</p>
+            <h1 className="font-extrabold text-on-surface text-3xl md:text-4xl tracking-tight">Student Profile</h1>
+            <p className="text-sm font-medium text-on-surface-variant mt-1">Manage your academic and personal details.</p>
           </div>
           {!isEditing && (
             <button 
               onClick={() => { setTempProfile(profile); setIsEditing(true); }}
-              className="shrink-0 flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-bold text-sm rounded-xl hover:bg-blue-700 transition-colors shadow-sm shadow-blue-200"
+              className="shrink-0 flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-xl hover:opacity-90 transition-colors shadow-sm"
             >
               <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>edit</span>
               Edit Profile
@@ -97,7 +97,7 @@ export default function Profile() {
         </div>
 
         {/* Unified Profile Card */}
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden relative">
+        <div className="card overflow-hidden relative border-outline">
           
           {/* Top Banner */}
           <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-600 relative">
@@ -109,7 +109,7 @@ export default function Profile() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 -mt-16 mb-8 relative z-10">
               <div className="relative group">
                 <img
-                  className={`w-32 h-32 rounded-2xl object-cover border-4 border-white shadow-lg bg-white transition-all ${isEditing ? 'opacity-80' : ''}`}
+                  className={`w-32 h-32 rounded-2xl object-cover border-4 border-surface shadow-lg bg-surface transition-all ${isEditing ? 'opacity-80' : ''}`}
                   src={isEditing ? tempProfile.avatarUrl : profile.avatarUrl}
                   alt={isEditing ? tempProfile.fullName : profile.fullName}
                 />
@@ -117,7 +117,7 @@ export default function Profile() {
                 {/* Always show camera button to easily upload, but make it more prominent in edit mode */}
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute -bottom-3 -right-3 w-11 h-11 md:w-10 md:h-10 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-blue-700 transition-colors border-2 border-white"
+                  className="absolute -bottom-3 -right-3 w-11 h-11 md:w-10 md:h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-md hover:opacity-90 transition-colors border-2 border-surface"
                   title="Update Photo"
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>photo_camera</span>
@@ -141,16 +141,16 @@ export default function Profile() {
               
               {/* Full Name */}
               <div className="md:col-span-2">
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-extrabold mb-1.5">Full Name</p>
+                <p className="text-[10px] text-text-faint uppercase tracking-widest font-extrabold mb-1.5">Full Name</p>
                 {isEditing ? (
                   <input
                     value={tempProfile.fullName}
                     onChange={(e) => setTempProfile({...tempProfile, fullName: e.target.value})}
-                    className="w-full border border-blue-200 rounded-xl px-4 py-3 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-100 bg-blue-50/50 text-gray-900 transition-all"
+                    className="w-full border border-outline rounded-xl px-4 py-3 text-sm font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-low text-on-surface transition-all"
                     placeholder="Enter your full name"
                   />
                 ) : (
-                  <p className="font-extrabold text-2xl text-gray-900">{profile.fullName}</p>
+                  <p className="font-extrabold text-2xl text-on-surface">{profile.fullName}</p>
                 )}
               </div>
 
@@ -163,19 +163,19 @@ export default function Profile() {
                 { key: 'faculty', label: 'Faculty', icon: 'account_balance' },
               ].map(({ key, label, icon }) => (
                 <div key={key} className="flex items-start gap-3">
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isEditing ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-400'}`}>
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isEditing ? 'bg-primary-light text-primary' : 'bg-surface-low text-on-surface-variant'}`}>
                     <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>{icon}</span>
                   </div>
                   <div className="flex-grow">
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-extrabold mb-1">{label}</p>
+                    <p className="text-[10px] text-text-faint uppercase tracking-widest font-extrabold mb-1">{label}</p>
                     {isEditing ? (
                       <input
                         value={tempProfile[key]}
                         onChange={(e) => setTempProfile({...tempProfile, [key]: e.target.value})}
-                        className="w-full border border-blue-200 rounded-lg px-3 py-1.5 text-sm font-bold outline-none focus:ring-2 focus:ring-blue-100 bg-blue-50/50 text-gray-900 transition-all"
+                        className="w-full border border-outline rounded-lg px-3 py-1.5 text-sm font-bold outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-low text-on-surface transition-all"
                       />
                     ) : (
-                      <p className="font-bold text-sm text-gray-900 mt-1">{profile[key]}</p>
+                      <p className="font-bold text-sm text-on-surface mt-1">{profile[key]}</p>
                     )}
                   </div>
                 </div>
@@ -185,16 +185,16 @@ export default function Profile() {
 
             {/* Edit Mode Actions (Bottom) */}
             {isEditing && (
-              <div className="mt-10 pt-6 border-t border-gray-100 flex items-center justify-end gap-3">
+              <div className="mt-10 pt-6 border-t border-outline flex items-center justify-end gap-3">
                 <button 
                   onClick={handleCancel} 
-                  className="px-6 py-2.5 bg-gray-100 text-gray-600 rounded-xl font-bold text-sm hover:bg-gray-200 transition-colors"
+                  className="px-6 py-2.5 bg-surface-low text-on-surface-variant rounded-xl font-bold text-sm hover:bg-surface-med transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleSave} 
-                  className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-colors shadow-md shadow-blue-200 flex items-center gap-2"
+                  className="px-6 py-2.5 bg-primary text-white rounded-xl font-bold text-sm hover:opacity-90 transition-colors shadow-md flex items-center gap-2"
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>save</span>
                   Save Changes

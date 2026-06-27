@@ -9,10 +9,8 @@ export default function Layout() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { dark } = useTheme();
 
-  const bg = dark ? '#0a0f1e' : '#f0f4ff';
-
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: bg }}>
+    <div className="flex h-screen overflow-hidden bg-bg">
       {/* Desktop Sidebar — hidden on mobile */}
       <aside className="hidden md:flex flex-shrink-0" style={{ width: '260px' }}>
         <Sidebar />

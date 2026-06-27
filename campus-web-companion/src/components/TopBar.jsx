@@ -61,22 +61,16 @@ export default function TopBar({ onMenuToggle }) {
     : 'ST';
 
   const getIconBg = (color) => color + '18';
-
-  const headerBg  = dark ? '#0e1525' : '#ffffff';
-  const borderCol = dark ? '#1f2d45' : '#c3c6d7';
-  const iconColor = dark ? '#7d94b8' : undefined;
-
   return (
     <header
-      className="flex items-center justify-between px-4 md:px-6 border-b border-outline-variant flex-shrink-0"
-      style={{ height: '64px', background: headerBg, borderColor: borderCol }}
+      className="glass-panel flex items-center justify-between px-3 sm:px-4 md:px-6 flex-shrink-0 z-50 sticky top-0 min-w-0 w-full"
+      style={{ height: '64px' }}
     >
       {/* Left: Hamburger (mobile only) + Brand */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 min-w-0">
         <button
           onClick={onMenuToggle}
-          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-colors"
-          style={{ color: iconColor }}
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl transition-colors hover:bg-surface-low text-on-surface-variant flex-shrink-0"
           aria-label="Open navigation menu"
           id="hamburger-btn"
         >
@@ -84,21 +78,21 @@ export default function TopBar({ onMenuToggle }) {
         </button>
 
         {/* Brand — mobile only */}
-        <div className="md:hidden flex items-center gap-2">
+        <div className="md:hidden flex items-center gap-2 flex-shrink-0 min-w-0">
           <div
-            className="w-7 h-7 rounded-lg flex items-center justify-center"
+            className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
             style={{ background: 'linear-gradient(135deg, #004ac6, #2563eb)' }}
           >
             <span className="material-symbols-outlined text-white" style={{ fontSize: '16px', fontVariationSettings: "'FILL' 1" }}>
               school
             </span>
           </div>
-          <span className="font-bold text-on-surface text-sm">CampusLink</span>
+          <span className="font-bold text-on-surface text-sm truncate hidden min-[360px]:block">CampusLink</span>
         </div>
       </div>
 
       {/* Right: Dark toggle + Notification Bell + Avatar */}
-      <div className="flex items-center gap-1 md:gap-2 ml-auto">
+      <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 ml-auto flex-shrink-0">
 
         {/* ── Dark Mode Toggle ── */}
         <button
@@ -126,7 +120,7 @@ export default function TopBar({ onMenuToggle }) {
         </button>
 
         {/* Divider */}
-        <div className="w-px h-6 mx-1" style={{ background: borderCol }} />
+        <div className="w-px h-6 mx-1 bg-border" />
 
         {/* ── Notification Bell with Dropdown ── */}
         <div className="relative" ref={dropdownRef}>
@@ -137,13 +131,8 @@ export default function TopBar({ onMenuToggle }) {
             id="notif-btn"
           >
             <span
-              className="material-symbols-outlined text-on-surface-variant"
-              style={{
-                fontSize: '22px',
-                fontVariationSettings: dropdownOpen ? "'FILL' 1" : "'FILL' 0",
-                color: dropdownOpen ? '#6091ff' : iconColor,
-                transition: 'all 0.2s ease',
-              }}
+              className={`material-symbols-outlined transition-all duration-200 ${dropdownOpen ? 'text-primary fill-icon' : 'text-on-surface-variant'}`}
+              style={{ fontSize: '22px' }}
             >
               notifications
             </span>
@@ -160,19 +149,14 @@ export default function TopBar({ onMenuToggle }) {
           {/* ── Notification Dropdown Panel ── */}
           {dropdownOpen && (
             <div
-              className="absolute right-0 top-12 z-50 rounded-2xl shadow-2xl border overflow-hidden"
+              className="absolute right-0 top-12 z-50 rounded-2xl shadow-2xl border border-outline overflow-hidden bg-surface"
               style={{
                 width: '360px',
-                background: dark ? '#111827' : '#ffffff',
-                borderColor: dark ? '#1f2d45' : '#e0e4f0',
                 animation: 'notifSlideIn 0.22s cubic-bezier(0.34,1.56,0.64,1)',
               }}
             >
               {/* Header */}
-              <div
-                className="flex items-center justify-between px-4 py-3"
-                style={{ borderBottom: `1px solid ${dark ? '#1f2d45' : '#e8ecf7'}` }}
-              >
+              <div className="flex items-center justify-between px-4 py-3 border-b border-outline">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#6091ff', fontVariationSettings: "'FILL' 1" }}>
                     notifications
@@ -215,15 +199,7 @@ export default function TopBar({ onMenuToggle }) {
                     <button
                       key={notif.id}
                       onClick={() => markRead(notif.id)}
-                      className="w-full flex items-start gap-3 px-4 py-3 text-left transition-colors"
-                      style={{
-                        background: notif.read
-                          ? 'transparent'
-                          : dark ? 'rgba(96,145,255,0.08)' : '#eff6ff',
-                        borderBottom: idx < notifications.length - 1
-                          ? `1px solid ${dark ? '#1a2438' : '#f0f0f5'}`
-                          : 'none',
-                      }}
+                      className={`w-full flex items-start gap-3 px-4 py-3 text-left transition-colors border-b border-outline ${notif.read ? 'bg-transparent' : 'bg-primary-light hover:bg-surface-low'}`}
                     >
                       <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: getIconBg(notif.color) }}>
                         <span className="material-symbols-outlined" style={{ fontSize: '20px', color: notif.color, fontVariationSettings: "'FILL' 1" }}>
@@ -244,8 +220,8 @@ export default function TopBar({ onMenuToggle }) {
               </div>
 
               {notifications.length > 0 && (
-                <div style={{ borderTop: `1px solid ${dark ? '#1f2d45' : '#e8ecf7'}` }} className="px-4 py-2.5 text-center">
-                  <button className="text-sm font-bold" style={{ color: '#6091ff' }} onClick={() => setDropdownOpen(false)}>
+                <div className="px-4 py-2.5 text-center border-t border-outline">
+                  <button className="text-sm font-bold text-primary hover:opacity-80" onClick={() => setDropdownOpen(false)}>
                     View all activity
                   </button>
                 </div>
@@ -255,11 +231,11 @@ export default function TopBar({ onMenuToggle }) {
         </div>
 
         {/* Divider */}
-        <div className="hidden sm:block w-px h-6 mx-1" style={{ background: borderCol }} />
+        <div className="hidden sm:block w-px h-6 mx-1 bg-border" />
 
         {/* Avatar */}
         <button
-          className="flex items-center gap-2 px-2 py-1 rounded-xl transition-colors"
+          className="flex items-center gap-2 px-1 sm:px-2 py-1 rounded-xl transition-colors"
           aria-label="User profile"
           style={{ minHeight: '44px' }}
         >

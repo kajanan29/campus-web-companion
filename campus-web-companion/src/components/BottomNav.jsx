@@ -11,10 +11,8 @@ const NAV = [
 export default function BottomNav() {
   return (
     <nav
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around px-1 py-1"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-40 flex items-center justify-around px-1 py-1 glass-panel border-t border-outline bg-topbar"
       style={{
-        background: 'var(--bn-bg, #ffffff)',
-        borderTop: '1px solid #c3c6d7',
         paddingBottom: 'env(safe-area-inset-bottom, 8px)',
       }}
     >

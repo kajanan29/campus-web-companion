@@ -88,7 +88,7 @@ function EventCard({ ev, onDelete, dateKey }) {
   const style = TYPE_STYLES[ev.type] || TYPE_STYLES.other;
   
   return (
-    <div className={`relative p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all bg-white border-l-4 ${style.border} group`}>
+    <div className={`relative p-4 rounded-xl border border-outline shadow-sm hover:shadow-md transition-all bg-surface border-l-4 ${style.border} group`}>
       <button 
         onClick={(e) => { e.stopPropagation(); onDelete(dateKey, ev.id); }}
         className="absolute top-1 right-1 w-11 h-11 md:w-8 md:h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 z-10"
@@ -102,12 +102,12 @@ function EventCard({ ev, onDelete, dateKey }) {
           <span className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-widest ${style.badge}`}>
             {ev.code}
           </span>
-          <span className="text-xs font-bold text-gray-500">{ev.time}</span>
+          <span className="text-xs font-bold text-on-surface-variant">{ev.time}</span>
         </div>
         
-        <h3 className="font-extrabold text-gray-900 text-sm leading-tight">{ev.title}</h3>
+        <h3 className="font-extrabold text-on-surface text-sm leading-tight">{ev.title}</h3>
         
-        <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-on-surface-variant">
           <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>location_on</span>
           <span className="truncate">{ev.loc}</span>
         </div>
@@ -283,45 +283,45 @@ export default function Schedule() {
   };
 
   return (
-    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] flex flex-col bg-slate-50 relative">
+    <div className="h-[calc(100vh-128px)] md:h-[calc(100vh-64px)] flex flex-col bg-bg relative">
       
       {/* ── Header Toolbar ── */}
-      <div className="bg-white border-b border-gray-200 px-4 py-4 md:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 z-20 sticky top-0">
+      <div className="bg-surface border-b border-outline px-4 py-4 md:px-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0 z-20 sticky top-0">
         
         <div>
-          <h1 className="font-extrabold text-2xl text-gray-900 tracking-tight">Class Schedule</h1>
-          <p className="text-sm font-bold text-gray-500 uppercase tracking-widest mt-0.5">{headerTitle}</p>
+          <h1 className="font-extrabold text-2xl text-on-surface tracking-tight">Class Schedule</h1>
+          <p className="text-sm font-bold text-on-surface-variant uppercase tracking-widest mt-0.5">{headerTitle}</p>
         </div>
 
         <div className="flex items-center justify-end w-full sm:w-auto gap-4">
-          <div className="relative flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-200" ref={dropdownRef}>
-            <button onClick={() => setDayOffset(o => o - 1)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white hover:shadow-sm text-gray-600 transition-all" title="Previous Day">
+          <div className="relative flex items-center gap-1 bg-surface-low p-1 rounded-xl border border-outline" ref={dropdownRef}>
+            <button onClick={() => setDayOffset(o => o - 1)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface hover:shadow-sm text-on-surface-variant transition-all" title="Previous Day">
               <span className="material-symbols-outlined">chevron_left</span>
             </button>
 
             <button 
               onClick={() => setShowCalendarDropdown(!showCalendarDropdown)}
-              className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all ${showCalendarDropdown ? 'bg-blue-600 text-white shadow-md' : 'hover:bg-white hover:shadow-sm text-gray-600'}`} 
+              className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all ${showCalendarDropdown ? 'bg-primary text-white shadow-md' : 'hover:bg-surface hover:shadow-sm text-on-surface-variant'}`} 
               title="Pick Date"
             >
               <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>calendar_month</span>
             </button>
 
-            <button onClick={() => setDayOffset(o => o + 1)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white hover:shadow-sm text-gray-600 transition-all" title="Next Day">
+            <button onClick={() => setDayOffset(o => o + 1)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface hover:shadow-sm text-on-surface-variant transition-all" title="Next Day">
               <span className="material-symbols-outlined">chevron_right</span>
             </button>
 
             {/* Floating Dropdown Calendar */}
             {showCalendarDropdown && (
-              <div className="absolute top-full right-0 mt-3 w-[300px] bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 z-50 fade-up">
+              <div className="absolute top-full right-0 mt-3 w-[300px] bg-surface rounded-2xl shadow-2xl border border-outline p-6 z-50 fade-up">
                 {/* Mini Calendar Navigation */}
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-extrabold text-gray-800 text-sm">{miniCalendar.monthName} {miniCalendar.year}</h2>
+                  <h2 className="font-extrabold text-on-surface text-sm">{miniCalendar.monthName} {miniCalendar.year}</h2>
                   <div className="flex gap-1">
-                    <button onClick={() => setMiniCalMonthOffset(o => o - 1)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
+                    <button onClick={() => setMiniCalMonthOffset(o => o - 1)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-surface-low text-on-surface-variant transition-colors">
                       <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>chevron_left</span>
                     </button>
-                    <button onClick={() => setMiniCalMonthOffset(o => o + 1)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 text-gray-500 transition-colors">
+                    <button onClick={() => setMiniCalMonthOffset(o => o + 1)} className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-surface-low text-on-surface-variant transition-colors">
                       <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>chevron_right</span>
                     </button>
                   </div>
@@ -330,7 +330,7 @@ export default function Schedule() {
                 {/* Days of Week Header */}
                 <div className="grid grid-cols-7 gap-1 text-center mb-2">
                   {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                    <div key={i} className="text-[10px] font-extrabold text-gray-400 py-1">{day}</div>
+                    <div key={i} className="text-[10px] font-extrabold text-text-faint py-1">{day}</div>
                   ))}
                 </div>
 
@@ -348,10 +348,10 @@ export default function Schedule() {
                         onClick={() => jumpToDate(dayObj.date)}
                         className={`
                           w-8 h-8 flex items-center justify-center rounded-full text-[13px] font-bold transition-all mx-auto
-                          ${!dayObj.isCurrentMonth ? 'text-gray-300' : 'text-gray-700 hover:bg-gray-100'}
-                          ${isSelected && !isExactSelectedDay ? 'bg-blue-50 text-blue-700' : ''}
-                          ${isExactSelectedDay ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm' : ''}
-                          ${isToday && !isExactSelectedDay ? 'ring-2 ring-inset ring-blue-600 text-blue-600' : ''}
+                          ${!dayObj.isCurrentMonth ? 'text-text-faint opacity-50' : 'text-on-surface hover:bg-surface-low'}
+                          ${isSelected && !isExactSelectedDay ? 'bg-primary-light text-primary' : ''}
+                          ${isExactSelectedDay ? 'bg-primary text-white hover:opacity-90 shadow-sm' : ''}
+                          ${isToday && !isExactSelectedDay ? 'ring-2 ring-inset ring-primary text-primary' : ''}
                         `}
                       >
                         {dayObj.date.getDate()}
@@ -366,7 +366,7 @@ export default function Schedule() {
                     setMiniCalMonthOffset(0);
                     jumpToDate(new Date());
                   }} 
-                  className="mt-6 w-full py-2.5 bg-gray-50 hover:bg-gray-100 text-gray-600 font-bold text-xs rounded-xl transition-colors border border-gray-200"
+                  className="mt-6 w-full py-2.5 bg-surface-low hover:bg-surface-med text-on-surface-variant font-bold text-xs rounded-xl transition-colors border border-outline"
                 >
                   Jump to Today
                 </button>
@@ -399,10 +399,10 @@ export default function Schedule() {
                     onClick={() => setSelectedDayKey(dateKey)}
                     className={`flex-shrink-0 flex flex-col items-center justify-center w-14 h-16 rounded-2xl border transition-all ${
                       selectedDayKey === dateKey
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-md scale-105'
+                        ? 'bg-primary text-white border-primary shadow-md scale-105'
                         : isToday
-                        ? 'bg-blue-50 text-blue-700 border-blue-200'
-                        : 'bg-white text-gray-500 border-gray-200 hover:bg-gray-50'
+                        ? 'bg-primary-light text-primary border-primary'
+                        : 'bg-surface text-on-surface-variant border-outline hover:bg-surface-low'
                     }`}
                   >
                     <span className="text-[10px] font-extrabold uppercase">{short}</span>
@@ -413,16 +413,16 @@ export default function Schedule() {
 
               {/* Selected Day Agenda */}
               <div className="flex-grow">
-                <h2 className="font-extrabold text-gray-900 mb-4 flex items-center gap-2">
-                  <span className="material-symbols-outlined text-blue-600">event_note</span>
+                <h2 className="font-extrabold text-on-surface mb-4 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-primary">event_note</span>
                   {weekDays.find(d => d.dateKey === selectedDayKey)?.full}'s Agenda
                 </h2>
                 
                 <div className="space-y-3">
                   {!(schedule[selectedDayKey] && schedule[selectedDayKey].length > 0) ? (
-                    <div className="py-16 text-center border-2 border-dashed border-gray-200 rounded-3xl bg-white/50">
-                      <span className="material-symbols-outlined text-gray-300 text-5xl mb-2">event_busy</span>
-                      <p className="font-bold text-gray-500 mt-2">No classes scheduled.</p>
+                    <div className="py-16 text-center border-2 border-dashed border-outline rounded-3xl bg-surface-low/50">
+                      <span className="material-symbols-outlined text-text-faint text-5xl mb-2">event_busy</span>
+                      <p className="font-bold text-on-surface-variant mt-2">No classes scheduled.</p>
                     </div>
                   ) : (
                     schedule[selectedDayKey].map(ev => (
@@ -442,7 +442,7 @@ export default function Schedule() {
                   <div key={day.dateKey} className="flex flex-col gap-3 h-full">
                     {/* Day Header */}
                     <div className={`p-3 rounded-xl border text-center transition-all ${
-                      day.isToday ? 'bg-blue-600 text-white border-blue-600 shadow-md scale-105' : 'bg-white border-gray-200 text-gray-500'
+                      day.isToday ? 'bg-primary text-white border-primary shadow-md scale-105' : 'bg-surface border-outline text-on-surface-variant'
                     }`}>
                       <div className="text-[10px] font-extrabold uppercase tracking-widest">{day.short}</div>
                       <div className="text-2xl font-black mt-0.5">{day.date}</div>
@@ -451,8 +451,8 @@ export default function Schedule() {
                     {/* Day Events Column */}
                     <div className="flex flex-col gap-3 flex-grow rounded-2xl">
                       {events.length === 0 ? (
-                        <div className="h-24 rounded-xl border-2 border-dashed border-gray-200 bg-white/40 flex items-center justify-center">
-                          <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">Free Day</span>
+                        <div className="h-24 rounded-xl border-2 border-dashed border-outline bg-surface-low/40 flex items-center justify-center">
+                          <span className="text-[10px] font-extrabold text-text-faint uppercase tracking-widest">Free Day</span>
                         </div>
                       ) : (
                         events.map((ev) => <EventCard key={ev.id} ev={ev} onDelete={deleteEvent} dateKey={day.dateKey} />)
@@ -478,14 +478,14 @@ export default function Schedule() {
 
       {/* ── Add Event Modal (Dialog) ── */}
       {showAddForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm fade-up">
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
-            <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50 shrink-0">
-              <h2 className="font-extrabold text-lg text-gray-900 flex items-center gap-2">
-                <span className="material-symbols-outlined text-blue-600">edit_calendar</span>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm fade-up">
+          <div className="bg-surface rounded-3xl shadow-2xl w-full max-w-md overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="px-6 py-4 border-b border-outline flex items-center justify-between bg-surface-low shrink-0">
+              <h2 className="font-extrabold text-lg text-on-surface flex items-center gap-2">
+                <span className="material-symbols-outlined text-primary">edit_calendar</span>
                 Schedule a Class
               </h2>
-              <button type="button" onClick={() => setShowAddForm(false)} className="w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:bg-gray-200 transition-colors">
+              <button type="button" onClick={() => setShowAddForm(false)} className="w-8 h-8 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-med transition-colors">
                 <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>close</span>
               </button>
             </div>
@@ -493,18 +493,18 @@ export default function Schedule() {
             <form onSubmit={handleAddEvent} className="p-6 flex flex-col gap-5 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
               
               {/* Duration Toggle */}
-              <div className="flex bg-gray-100 p-1 rounded-xl">
+              <div className="flex bg-surface-low p-1 rounded-xl">
                 <button 
                   type="button" 
                   onClick={() => setDuration('temporary')}
-                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${duration === 'temporary' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${duration === 'temporary' ? 'bg-surface shadow-sm text-on-surface' : 'text-on-surface-variant hover:text-on-surface'}`}
                 >
                   Temporary (One-off)
                 </button>
                 <button 
                   type="button" 
                   onClick={() => setDuration('weekly')}
-                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${duration === 'weekly' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}
+                  className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${duration === 'weekly' ? 'bg-surface shadow-sm text-on-surface' : 'text-on-surface-variant hover:text-on-surface'}`}
                 >
                   Weekly (Semester)
                 </button>
@@ -512,23 +512,23 @@ export default function Schedule() {
 
               {duration === 'temporary' ? (
                 <div>
-                  <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Date</label>
+                  <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Date</label>
                   <input 
                     type="date"
                     required
                     value={newDateKey} 
                     onChange={(e) => setNewDateKey(e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all"
+                    className="input-premium w-full"
                   />
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Day of Week</label>
+                    <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Day of Week</label>
                     <select 
                       value={newDayOfWeek} 
                       onChange={(e) => setNewDayOfWeek(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all"
+                      className="input-premium w-full"
                     >
                       <option value="1">Monday</option>
                       <option value="2">Tuesday</option>
@@ -540,26 +540,26 @@ export default function Schedule() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Until Date</label>
+                    <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Until Date</label>
                     <input 
                       type="date"
                       required
                       value={newUntilDate} 
                       onChange={(e) => setNewUntilDate(e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all"
+                      className="input-premium w-full"
                     />
                   </div>
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100">
+              <div className="grid grid-cols-2 gap-4 pt-2 border-t border-outline">
                 <div>
-                  <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Course Code</label>
-                  <input required placeholder="e.g. CS 101" value={newCode} onChange={(e) => setNewCode(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                  <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Course Code</label>
+                  <input required placeholder="e.g. CS 101" value={newCode} onChange={(e) => setNewCode(e.target.value)} className="input-premium w-full" />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Type</label>
-                  <select value={newType} onChange={(e) => setNewType(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                  <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Type</label>
+                  <select value={newType} onChange={(e) => setNewType(e.target.value)} className="input-premium w-full">
                     <option value="lecture">Lecture</option>
                     <option value="lab">Lab Session</option>
                     <option value="studio">Studio</option>
@@ -570,32 +570,32 @@ export default function Schedule() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Course Title</label>
-                <input required placeholder="e.g. Intro to Computer Science" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Course Title</label>
+                <input required placeholder="e.g. Intro to Computer Science" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} className="input-premium w-full" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Start Time</label>
-                    <input type="time" required value={newStartTime} onChange={(e) => setNewStartTime(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                    <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Start Time</label>
+                    <input type="time" required value={newStartTime} onChange={(e) => setNewStartTime(e.target.value)} className="input-premium w-full" />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">End Time</label>
-                    <input type="time" required value={newEndTime} onChange={(e) => setNewEndTime(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                    <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">End Time</label>
+                    <input type="time" required value={newEndTime} onChange={(e) => setNewEndTime(e.target.value)} className="input-premium w-full" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mb-1.5">Location</label>
-                  <input placeholder="e.g. Science Block" value={newLoc} onChange={(e) => setNewLoc(e.target.value)} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-bold text-gray-900 outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                  <label className="block text-[10px] font-extrabold text-text-faint uppercase tracking-widest mb-1.5">Location</label>
+                  <input placeholder="e.g. Science Block" value={newLoc} onChange={(e) => setNewLoc(e.target.value)} className="input-premium w-full" />
                 </div>
               </div>
 
-              <div className="mt-2 pt-4 border-t border-gray-100 flex gap-3 justify-end shrink-0">
-                <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-xl font-bold text-sm text-gray-500 hover:bg-gray-100 transition-colors">
+              <div className="mt-2 pt-4 border-t border-outline flex gap-3 justify-end shrink-0">
+                <button type="button" onClick={() => setShowAddForm(false)} className="px-5 py-2.5 rounded-xl font-bold text-sm text-on-surface-variant hover:bg-surface-low transition-colors">
                   Cancel
                 </button>
-                <button type="submit" className="px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-200 transition-all">
+                <button type="submit" className="px-6 py-2.5 rounded-xl font-bold text-sm text-white bg-primary hover:opacity-90 shadow-md transition-all">
                   Save to Schedule
                 </button>
               </div>
