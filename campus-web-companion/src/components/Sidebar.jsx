@@ -14,10 +14,7 @@ const NAV_ITEMS = [
   { to: '/profile',  icon: 'person',          label: 'Profile'    },
 ];
 
-const BOTTOM_ITEMS = [
-  { icon: 'settings', label: 'Settings' },
-  { icon: 'help',     label: 'Help'     },
-];
+
 
 export default function Sidebar({ onClose, mobile }) {
   const [profile, setProfile] = useState(() => {
@@ -122,19 +119,7 @@ export default function Sidebar({ onClose, mobile }) {
       </div>
 
       {/* Bottom Section */}
-      <div className="py-4 px-3 border-t border-outline-variant space-y-1 flex-shrink-0">
-        {BOTTOM_ITEMS.map(({ icon, label }) => (
-          <button
-            key={label}
-            className="w-full flex items-center gap-3 px-3 rounded-xl text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-all font-bold"
-            style={{ minHeight: '48px', fontSize: '14px' }}
-            aria-label={label}
-          >
-            <span className="material-symbols-outlined flex-shrink-0" style={{ fontSize: '22px' }}>{icon}</span>
-            {label}
-          </button>
-        ))}
-
+      <div className="py-4 px-3 border-t border-outline-variant flex-shrink-0">
         {/* User chip */}
         <div className="flex items-center gap-3 px-3 py-2 mt-2 rounded-xl bg-surface-container-low" style={{ minHeight: '52px' }}>
           {profile.avatarUrl ? (
