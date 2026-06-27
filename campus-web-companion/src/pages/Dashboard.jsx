@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SEED_ASSIGNMENTS } from '../utils/seedAssignments';
 import { SEED_COURSES } from '../utils/seedCourses';
 
@@ -23,44 +24,84 @@ const getWeatherInfo = (code) => {
 
 /* ─── Component ─────────────────────────────────────────────────────── */
 export default function Dashboard() {
+  const navigate = useNavigate();
 
   /* Weather state */
   const [weather, setWeather]           = useState(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
   const [weatherError, setWeatherError] = useState(false);
+  const [cityName, setCityName]         = useState('');
 
   /* Notification state */
   const [notifStatus, setNotifStatus]   = useState(Notification.permission);
 
   const gridRef = useRef(null);
 
-  /* ── Fetch weather from Open-Meteo (free, no API key) ── */
+  /* ── Fetch weather using real device location ── */
   useEffect(() => {
     const controller = new AbortController();
-    setWeatherLoading(true);
-    setWeatherError(false);
 
-    fetch(
-      'https://api.open-meteo.com/v1/forecast' +
-        '?latitude=6.9271&longitude=79.8612' +
-        '&current_weather=true&timezone=Asia%2FColombo',
-      { signal: controller.signal }
-    )
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        setWeather(data.current_weather);
-        setWeatherLoading(false);
-      })
-      .catch((err) => {
-        if (err.name !== 'AbortError') {
-          console.warn('Weather fetch failed:', err.message);
-          setWeatherError(true);
+    const fetchWeather = (lat, lon, city = '') => {
+      setWeatherLoading(true);
+      setWeatherError(false);
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=${encodeURIComponent(tz)}`,
+        { signal: controller.signal }
+      )
+        .then((res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then((data) => {
+          setWeather(data.current_weather);
+          setCityName(city);
           setWeatherLoading(false);
-        }
-      });
+        })
+        .catch((err) => {
+          if (err.name !== 'AbortError') {
+            console.warn('Weather fetch failed:', err.message);
+            setWeatherError(true);
+            setWeatherLoading(false);
+          }
+        });
+    };
+
+    const reverseGeocode = async (lat, lon) => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`,
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        const data = await res.json();
+        return (
+          data?.address?.city ||
+          data?.address?.town ||
+          data?.address?.village ||
+          data?.address?.county ||
+          ''
+        );
+      } catch {
+        return '';
+      }
+    };
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude, longitude } = pos.coords;
+          const city = await reverseGeocode(latitude, longitude);
+          fetchWeather(latitude, longitude, city);
+        },
+        () => {
+          // Permission denied — fall back to Colombo
+          fetchWeather(6.9271, 79.8612, 'Colombo');
+        },
+        { timeout: 8000 }
+      );
+    } else {
+      fetchWeather(6.9271, 79.8612, 'Colombo');
+    }
 
     return () => controller.abort();
   }, []);
@@ -197,30 +238,14 @@ export default function Dashboard() {
                 <span className="material-symbols-outlined text-primary" style={{ fontSize: '18px', fontVariationSettings: "'FILL' 1" }}>
                   {weatherInfo.icon}
                 </span>
+                {cityName && (
+                  <span className="text-on-surface-variant text-xs hidden sm:inline">{cityName}</span>
+                )}
                 <span className="font-bold text-on-surface">{Math.round(weather.temperature)}°C</span>
                 <span className="text-on-surface-variant text-xs hidden sm:inline">{weatherInfo.desc}</span>
               </>
             )}
           </div>
-
-          {/* Notification button */}
-          <button
-            onClick={requestNotifications}
-            className="px-3 py-2 rounded-lg font-bold flex items-center gap-2 text-sm transition-colors"
-            style={{
-              minHeight: '44px',
-              background: notifStatus === 'granted' ? 'rgba(0,98,66,0.1)' : 'rgba(157,67,0,0.1)',
-              color:      notifStatus === 'granted' ? '#006242' : '#9d4300',
-              border:     notifStatus === 'granted' ? '1px solid rgba(0,98,66,0.2)' : '1px solid rgba(157,67,0,0.2)',
-            }}
-            title="Enable deadline reminders"
-            id="notif-toggle-btn"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: '18px', fontVariationSettings: notifStatus === 'granted' ? "'FILL' 1" : "'FILL' 0" }}>
-              {notifStatus === 'granted' ? 'notifications_active' : 'notifications'}
-            </span>
-            <span className="hidden sm:inline">{notifStatus === 'granted' ? 'Reminders On' : 'Reminders'}</span>
-          </button>
         </div>
       </section>
 
@@ -237,8 +262,12 @@ export default function Dashboard() {
                 <span className="material-symbols-outlined text-primary">event_upcoming</span>
                 Today's Schedule
               </h2>
-              <button className="text-primary font-bold hover:underline text-sm px-2" style={{ minHeight: '44px' }}>
-                View Weekly
+              <button
+                onClick={() => navigate('/schedule')}
+                className="text-primary font-bold hover:underline text-sm px-2"
+                style={{ minHeight: '44px' }}
+              >
+                View Schedule
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -329,7 +358,13 @@ export default function Dashboard() {
                 ))
               )}
             </div>
-            <button className="w-full mt-4 py-3 border border-dashed border-outline rounded-lg text-on-surface-variant font-bold hover:bg-surface-container-low transition-all text-sm" style={{ minHeight: '48px' }}>
+            <button
+              onClick={() => navigate('/assignments')}
+              className="w-full mt-4 py-3 rounded-lg font-bold transition-all text-sm text-white"
+              style={{ minHeight: '48px', background: 'linear-gradient(135deg, #2563eb 0%, #004ac6 100%)', border: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.opacity = '0.9'}
+              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+            >
               View All Assignments
             </button>
           </div>
