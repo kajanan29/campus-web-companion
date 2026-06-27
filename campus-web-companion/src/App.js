@@ -7,6 +7,7 @@ import Assignments from './pages/Assignments';
 import Profile from './pages/Profile';
 import { startNotificationService } from './utils/notifications';
 import { NotificationProvider } from './context/NotificationContext';
+import { ThemeProvider } from './context/ThemeContext';
 import './index.css';
 
 export default function App() {
@@ -15,18 +16,20 @@ export default function App() {
   }, []);
 
   return (
-    <NotificationProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="/schedule" element={<Schedule />} />
-            <Route path="/assignments" element={<Assignments />} />
-            <Route path="/profile"  element={<Profile />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </NotificationProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="/schedule" element={<Schedule />} />
+              <Route path="/assignments" element={<Assignments />} />
+              <Route path="/profile"  element={<Profile />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </NotificationProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const DEFAULT_PROFILE = {
   fullName: 'Alex James Sterling',
@@ -17,6 +18,10 @@ const NAV_ITEMS = [
 
 
 export default function Sidebar({ onClose, mobile }) {
+  const { dark } = useTheme();
+  const sideBg     = dark ? '#0e1525' : '#ffffff';
+  const borderCol  = dark ? '#1f2d45' : '#c3c6d7';
+  const chipBg     = dark ? '#161e2e' : '#f3f4fb';
   const [profile, setProfile] = useState(() => {
     try {
       const saved = localStorage.getItem('campuslink-profile');
@@ -41,11 +46,11 @@ export default function Sidebar({ onClose, mobile }) {
 
   return (
     <nav
-      className="flex flex-col h-full border-r border-outline-variant"
-      style={{ background: '#ffffff', width: mobile ? '280px' : '260px' }}
+      className="flex flex-col h-full border-r"
+      style={{ background: sideBg, borderColor: borderCol, width: mobile ? '280px' : '260px' }}
     >
       {/* Brand / Close Row */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-outline-variant flex-shrink-0" style={{ height: '64px' }}>
+      <div className="flex items-center justify-between px-5 py-4 flex-shrink-0" style={{ height: '64px', borderBottom: `1px solid ${borderCol}` }}>
         <div className="flex items-center gap-3">
           <div
             className="w-9 h-9 rounded-xl flex items-center justify-center shadow-sm"
@@ -116,9 +121,9 @@ export default function Sidebar({ onClose, mobile }) {
       </div>
 
       {/* Bottom Section */}
-      <div className="py-4 px-3 border-t border-outline-variant flex-shrink-0">
+      <div className="py-4 px-3 flex-shrink-0" style={{ borderTop: `1px solid ${borderCol}` }}>
         {/* User chip */}
-        <div className="flex items-center gap-3 px-3 py-2 mt-2 rounded-xl bg-surface-container-low" style={{ minHeight: '52px' }}>
+        <div className="flex items-center gap-3 px-3 py-2 mt-2 rounded-xl" style={{ minHeight: '52px', background: chipBg }}>
           {profile.avatarUrl ? (
             <img src={profile.avatarUrl} alt="avatar" className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-outline-variant" />
           ) : (
